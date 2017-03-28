@@ -52,25 +52,6 @@ RSpec.describe AddressBook do
       expect(book_size).to eq 5
     end
 
-  end
-
-
-  describe "#remove_entry" do
-    it 'removes only one entry on the address book' do
-      book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
-
-      name = 'Omar Aguinaga'
-      phone_number = '444.123.4567'
-      email = 'omar.aguinaga94@gmail.com'
-      book.add_entry(name, phone_number, email)
-
-      expect(book.entries.size).to eq(2)
-
-      book.remove_entry(name, phone_number, email)
-      expect(book.entries.size).to eq(1)
-      expect(book.entries.first.name).to eq('Ada Lovelace')
-    end
-
     it "imports the 1st entry" do
       book.import_from_csv("entries.csv")
       # Check the first entry
@@ -105,6 +86,56 @@ RSpec.describe AddressBook do
       entry_five = book.entries[4]
       check_entry(entry_five, "Sussie", "555-555-2036", "sussie@blocmail.com")
     end
+
+    it "imports the correct number of entries from entries_2.csv" do
+      # #3
+      book.import_from_csv("entries_2.csv")
+      book_size = book.entries.size
+
+      # Check the size of the entries in AddressBook
+      expect(book_size).to eq 3
+    end
+
+    it "imports the 1st entry" do
+      book.import_from_csv("entries_2.csv")
+      # Check the first entry
+      entry_one = book.entries[0]
+      # #5
+      check_entry(entry_one, "Abb", "555-555-4854", "bill@blocmail.com")
+    end
+    it "imports the 2nd entry" do
+      book.import_from_csv("entries_2.csv")
+      # Check the second entry
+      entry_two = book.entries[1]
+      check_entry(entry_two, "Acc", "555-555-5415", "bob@blocmail.com")
+    end
+
+    it "imports the 3rd entry" do
+      book.import_from_csv("entries_2.csv")
+      # Check the third entry
+      entry_three = book.entries[2]
+      check_entry(entry_three, "Agg", "555-555-3660", "joe@blocmail.com")
+    end
+
+  end
+
+
+  describe "#remove_entry" do
+    it 'removes only one entry on the address book' do
+      book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+
+      name = 'Omar Aguinaga'
+      phone_number = '444.123.4567'
+      email = 'omar.aguinaga94@gmail.com'
+      book.add_entry(name, phone_number, email)
+
+      expect(book.entries.size).to eq(2)
+
+      book.remove_entry(name, phone_number, email)
+      expect(book.entries.size).to eq(1)
+      expect(book.entries.first.name).to eq('Ada Lovelace')
+    end
+
   end
 
 end
