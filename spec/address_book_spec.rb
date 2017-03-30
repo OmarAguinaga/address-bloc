@@ -157,4 +157,15 @@ RSpec.describe AddressBook do
      end
    end
 
+   describe "#detonate" do
+     it "Deletes all entries" do
+       book.add_entry("Joe", "555-555-3660", "joe@blocmail.com")
+       book.add_entry("Sussie", "555-555-2036", "sussie@blocmail.com")
+       book.add_entry("Sally", "555-555-4646", "sally@blocmail.com")
+       expect(book.entries.size).to eq(3)
+       
+       book.detonate
+       expect(book.entries.size).to eq(0)
+     end
+   end
 end

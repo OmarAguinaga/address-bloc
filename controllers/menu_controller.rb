@@ -44,18 +44,14 @@ class MenuController
       # #9
     when 0
       system "clear"
-      detonate
+      @address_book.detonate
+      puts "Your address book is empty"
       main_menu
     else
       system "clear"
       puts "Sorry, that is not a valid input"
       main_menu
     end
-  end
-
-  def detonate
-    address_book.entries.clear
-    puts "Your address book is empty"
   end
 
   def view_all_entries

@@ -8,6 +8,11 @@ class AddressBook
     @entries = []
   end
 
+  def detonate
+    @entries.clear
+  end
+
+
   def add_entry(name, phone_number, email)
     # #9
     index = 0
@@ -43,6 +48,7 @@ class AddressBook
       add_entry(row_hash["name"], row_hash["phone_number"], row_hash["email"])
     end
   end
+
 
   # Search AddressBook for a specific entry by name with bynary serach
   def binary_search(name)
