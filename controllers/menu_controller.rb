@@ -15,6 +15,7 @@ class MenuController
     puts "3 - Search for an entry"
     puts "4 - Import entries from a CSV"
     puts "5 - Exit"
+    puts "0 - Delete everything!"
     print "Enter your selection: "
 
 
@@ -41,6 +42,10 @@ class MenuController
       # #8
       exit(0)
       # #9
+    when 0
+      system "clear"
+      detonate
+      main_menu
     else
       system "clear"
       puts "Sorry, that is not a valid input"
@@ -48,17 +53,21 @@ class MenuController
     end
   end
 
+  def detonate
+    address_book.entries.clear
+    puts "Your address book is empty"
+  end
 
   def view_all_entries
     address_book.entries.each do |entry|
-       system "clear"
-       puts entry.to_s
+      system "clear"
+      puts entry.to_s
 
-       entry_submenu(entry)
-     end
+      entry_submenu(entry)
+    end
 
-     system "clear"
-     puts "End of entries"
+    system "clear"
+    puts "End of entries"
   end
 
   def create_entry
@@ -80,17 +89,17 @@ class MenuController
 
   def search_entries
     print "Search by name: "
-     name = gets.chomp
+    name = gets.chomp
 
-     match = address_book.binary_search(name)
-     system "clear"
+    match = address_book.binary_search(name)
+    system "clear"
 
-     if match
-       puts match.to_s
-       search_submenu(match)
-     else
-       puts "No match found for #{name}"
-     end
+    if match
+      puts match.to_s
+      search_submenu(match)
+    else
+      puts "No match found for #{name}"
+    end
   end
 
   def read_csv
@@ -115,80 +124,80 @@ class MenuController
   end
 
   def delete_entry(entry)
-     address_book.entries.delete(entry)
-     puts "#{entry.name} has been deleted"
-   end
+    address_book.entries.delete(entry)
+    puts "#{entry.name} has been deleted"
+  end
 
-   def edit_entry(entry)
-     print "Updated name: "
-     name = gets.chomp
-     print "Updated phone number: "
-     phone_number = gets.chomp
-     print "Updated email: "
-     email = gets.chomp
+  def edit_entry(entry)
+    print "Updated name: "
+    name = gets.chomp
+    print "Updated phone number: "
+    phone_number = gets.chomp
+    print "Updated email: "
+    email = gets.chomp
 
-     entry.name = name if !name.empty?
-     entry.phone_number = phone_number if !phone_number.empty?
-     entry.email = email if !email.empty?
-     system "clear"
+    entry.name = name if !name.empty?
+    entry.phone_number = phone_number if !phone_number.empty?
+    entry.email = email if !email.empty?
+    system "clear"
 
-     puts "Updated entry:"
-     puts entry
-   end
+    puts "Updated entry:"
+    puts entry
+  end
 
   def entry_submenu(entry)
-     puts "n - next entry"
-     puts "d - delete entry"
-     puts "e - edit this entry"
-     puts "m - return to main menu"
+    puts "n - next entry"
+    puts "d - delete entry"
+    puts "e - edit this entry"
+    puts "m - return to main menu"
 
-     selection = gets.chomp
+    selection = gets.chomp
 
-     case selection
-     # Return to view_all_entries
-       when "n"
-     # pending...
-       when "d"
-         delete_entry(entry)
-       when "e"
-         edit_entry(entry)
-         entry_submenu(entry)
-       when "m"
-         system "clear"
-         main_menu
-       else
-         system "clear"
-         puts "#{selection} is not a valid input"
-         entry_submenu(entry)
-     end
-   end
+    case selection
+      # Return to view_all_entries
+    when "n"
+      # pending...
+    when "d"
+      delete_entry(entry)
+    when "e"
+      edit_entry(entry)
+      entry_submenu(entry)
+    when "m"
+      system "clear"
+      main_menu
+    else
+      system "clear"
+      puts "#{selection} is not a valid input"
+      entry_submenu(entry)
+    end
+  end
 
-   def search_submenu(entry)
-     # #12
-     puts "\nd - delete entry"
-     puts "e - edit this entry"
-     puts "m - return to main menu"
-     # #13
-     selection = gets.chomp
+  def search_submenu(entry)
+    # #12
+    puts "\nd - delete entry"
+    puts "e - edit this entry"
+    puts "m - return to main menu"
+    # #13
+    selection = gets.chomp
 
-     # #14
-     case selection
-       when "d"
-         system "clear"
-         delete_entry(entry)
-         main_menu
-       when "e"
-         edit_entry(entry)
-         system "clear"
-         main_menu
-       when "m"
-         system "clear"
-         main_menu
-       else
-         system "clear"
-         puts "#{selection} is not a valid input"
-         puts entry.to_s
-         search_submenu(entry)
-     end
-   end
+    # #14
+    case selection
+    when "d"
+      system "clear"
+      delete_entry(entry)
+      main_menu
+    when "e"
+      edit_entry(entry)
+      system "clear"
+      main_menu
+    when "m"
+      system "clear"
+      main_menu
+    else
+      system "clear"
+      puts "#{selection} is not a valid input"
+      puts entry.to_s
+      search_submenu(entry)
+    end
+  end
 end
